@@ -11,10 +11,3 @@ Detailed instruction is given in the handout.
 If you find a bug in the release, you can (1) raise the question on the course Moodle forum or (2) report an issue in this repository. If you manage to fix it, you can create a pull request to the release branch. We appreciate your effort in making this practical better!
 
 If you have questions regarding the practical, please go to the course forum and discuss there.
-
-# Contributor
-
-- Weizhe Lin, Lent 2022, 2023
-- Jinghong Chen, Lent 2022, 2023
-- Ryan Anderson, Easter 2021, 2022
-- Bill Byrne, Lent 2022, 2023
