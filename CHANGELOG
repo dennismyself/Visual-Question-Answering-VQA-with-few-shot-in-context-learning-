@@ -1,0 +1,21 @@
+## Jan.4, 2023
+
+- Ex1.1: Rewritten inline instructions from a sequenence of steps to a set of requirements
+- Ex1.1: Add print statement after Ex1.1 so they can validate their solution. Expect "[Data Statistics]: training data loader: 25000; test data loader: 3195" printed if successful.
+- Ex1.2: Change inline instruction. Directly instruct students to use `self.tokenizer()` for tokenization.
+- Ex1.2: Reorder code and add comments telling students to overwrite `tokenized_captions` variable 
+- Ex1.2: Add sanity check that checks that labels can be detokenized back to ground-truth captions. **NEED HANDOUT UPDATE**
+- Ex1.3: Use named_parameters() instead of parameters() in the crib to be consistent with the inline instruction
+- Ex1.4: Update comments
+- Ex2.1: Make inline instructions more direct and clearer
+- Ex4.1: Refine inline instruction. Give explicit hints on how the `on` and `how` parameters of `dataframe.merge()` should be set.
+- Ex4.2: Add inline comments that direct students to  calling `df[col_name].values`. `np.stack`, `np.squeeze`, and `DataFrame.iterrows`.
+
+## Jan.16, 2023
+
+- Created Ex4.5 by adding files: `src/evaluate_from_prediciton_file_postprocessing.py` and `src/evaluate_from_prediciton_file.py`, updated function write_predictions_to_file` in `metrics_processors.py`
+- Update `main.py`, `vqa2_datasets.py`, `few_shot_vqa_executor.py` for wandb logging to show vqa images
+
+## Jan.18, 2023
+ 
+- Add caching mechanism to crib utility

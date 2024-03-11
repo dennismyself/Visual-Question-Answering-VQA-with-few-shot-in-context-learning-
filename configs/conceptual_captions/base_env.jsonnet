@@ -1,0 +1,151 @@
+// This is the base environment file
+// It serves as default values for all other jsonnet config files
+// Please override these values dirrectly in corresponding config files
+
+
+// Default values for training control
+local train_batch_size = 32;
+local valid_batch_size = 32;
+local test_batch_size = 32;
+local valid_step_size = 100;
+local save_interval = 1;
+local train_epochs = 9999;
+local adam_epsilon = 1e-08;
+local lr = 1e-4;
+local gradient_accumulation_steps = 4;
+local gradient_clipping = 0;
+local warmup_steps = 0;
+
+local seed=2021;
+
+// data path configuration
+local wandb_cache_dir = '';
+local default_cache_folder = '../data/conceptual_captions/cache';
+local vqa_data = {
+  "question_files":{
+    "train": '../data/vqa2/v2_OpenEnded_mscoco_train2014_questions.json',
+    "val": '../data/vqa2/v2_OpenEnded_mscoco_val2014_questions.json',
+  },
+  "annotation_files": {
+    "train": '../data/vqa2/v2_mscoco_train2014_annotations.json',
+    "val": '../data/vqa2/v2_mscoco_val2014_annotations.json',
+  },
+};
+local conceptual_captions = {
+  "train": "../data/conceptual_captions/pre-extracted-features/conceptual_captions_ViT-L_14@336px_train.parquet",
+  "val": "../data/conceptual_captions/pre-extracted-features/conceptual_captions_ViT-L_14@336px_validation.parquet",
+};
+local img_data = {
+  "train": "../data/ok-vqa/train2014",
+  "val": "../data/ok-vqa/val2014",
+};
+local clip_embeddings = {
+  "train": "../data/vqa2/pre-extracted_features/clip_embeddings/coco_clip-vit-base-patch32_train2014.pkl",
+  "val": "../data/vqa2/pre-extracted_features/clip_embeddings/coco_clip-vit-base-patch32_val2014.pkl",
+  "test": "../data/vqa2/pre-extracted_features/clip_embeddings/coco_clip-vit-base-patch32_test2015.pkl",
+};
+
+{
+  "DATA_FOLDER": "",
+  "EXPERIMENT_FOLDER": "",
+  "TENSORBOARD_FOLDER": "",
+  "WANDB": {
+    "CACHE_DIR":  wandb_cache_dir,
+    "entity": "jq271",
+    "project": "VQA_practicals",
+    "tags": ["VQA2-clipcap"],
+  },
+  "platform_type": "pytorch",
+  "ignore_pretrained_weights": [],
+  "experiment_name": "default_test",
+  "seed": seed,
+  "model_config": {
+    "base_model": "T0_3B",
+    "pretrained": 1,
+    "modules": [],
+    "input_modules": {
+      "module_list":[],
+      "postprocess_module_list": [],
+    },
+    "rag_modules": {
+      "module_list":[],
+    },
+    "decoder_input_modules": {
+      "module_list":[],
+      "postprocess_module_list": [],
+    },
+    "output_modules": {
+      "module_list":[],
+      "postprocess_module_list": [],
+    },
+  },
+  "cache":{
+    "default_folder": default_cache_folder,
+    "regenerate":{
+      "train_data_preprocessed": 0,
+      "test_data_preprocessed": 0,
+    },
+  },
+  "data_loader": {
+    "dataset_modules": {
+      "module_list": [],
+      "module_dict":{   // all available modules
+        "LoadClipEmbeddings":{
+          "type": "LoadClipEmbeddings", "option": "default",
+          "config": clip_embeddings,
+        },
+        "LoadConceptualCaptions": {
+          "type": "LoadConceptualCaptions", "option": "default",
+          "config": {
+            "conceptual_captions_path": conceptual_captions,
+          },
+        },
+        "LoadVQA2Data": {
+          "type": "LoadVQA2Data", "option": "default",
+          "config": {
+            "vqa_data_path": vqa_data,
+            "image_data_path": img_data,
+          },
+        },
+      },
+    },
+  },
+  "cuda": 0,
+  "gpu_device":0,
+  "train": {
+    "type": "",
+    "epochs":train_epochs,
+    "batch_size":train_batch_size,
+    "lr": lr,
+    "adam_epsilon": adam_epsilon,
+    "load_epoch":-1,
+    "save_interval":save_interval,
+    "load_model_path": "",
+    "scheduler": "none",
+    "additional": {
+        "gradient_accumulation_steps": gradient_accumulation_steps,
+        "warmup_steps": warmup_steps,
+        "gradient_clipping": gradient_clipping,
+        "plugins": [],
+        "save_top_k": -1,
+        "save_top_k_metric": "test/loss",
+        "save_top_k_mode": "min",
+    }
+  },
+  "valid": {
+    "batch_size":valid_batch_size,
+    "step_size":valid_step_size,
+    "additional": {
+    },
+  },
+  "test": {
+    "evaluation_name": "test_evaluation",
+    "load_epoch": -1,
+    "batch_size": test_batch_size,
+    "num_evaluation": 0,
+    "load_model_path": "",
+    "additional": {
+        "multiprocessing": 4,
+    },
+  }
+}
